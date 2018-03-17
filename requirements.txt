@@ -4,3 +4,5 @@ pymongo
 dateutil.relativedelta
 werobot
 PyV8
+python-dateutil
+pyyaml

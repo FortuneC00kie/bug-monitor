@@ -10,7 +10,7 @@ import time
 sys.path.append("..")
 from lib.mongodb import *
 
-with open('../config.yaml', 'r') as f:
+with open('config.yaml', 'r') as f:
 	a = f.read()
 	conf = yaml.load(a)
 

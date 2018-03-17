@@ -1,7 +1,7 @@
 cve_api:
-  username   : xxxxxxxxxxxxx
-  password   : xxxxxxxxxxxxx
+  username   : xxxxxxxxxxx
+  password   : xxxxxxxxxxx
 
 wechat:
-  app_id     : xxxxxxxxxxxxx
-  app_secret : xxxxxxxxxxxxx
+  app_id     : xxxxxxxxxxx
+  app_secret : xxxxxxxxxxx

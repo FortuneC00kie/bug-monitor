@@ -12,9 +12,6 @@ from lib.mongodb import *
 
 
 def struts_latest():
-    """
-    获取struts最新漏洞的url
-    """
     struts = requests.get("https://cwiki.apache.org/confluence/display/WW/Security+Bulletins")
     soup = BeautifulSoup(struts.text, "html.parser")
     s2 = soup.find_all(href=re.compile("S2-"))
@@ -22,9 +19,6 @@ def struts_latest():
 
 
 def struts_info(url, struts_id):
-    """
-    获取指定的struts的漏洞信息
-    """
     s2_page = requests.get(url)
     soup = BeautifulSoup(s2_page.text, "html.parser")
     content = soup.tbody
@@ -42,9 +36,6 @@ def struts_info(url, struts_id):
 
 
 def struts_info_save(url, struts_id):
-    """
-    保存最新的struts漏洞信息
-    """
     i = struts_info(url, struts_id)
     if not bug_info_search(i['name']):
         bug_info_save(i['name'], i['rate'], i['affected'], i['info'], i['cveid'], url, None)

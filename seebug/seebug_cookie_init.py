@@ -48,13 +48,17 @@ def get_jsl_clearance(req, post_cookie):
     script = result.replace("while(window._phantom||window.__phantomas){};","")
     script = script.replace("setTimeout('location.href=location.href.replace(/[\?|&]captcha-challenge/,\\\'\\\')',1500);", "")
     script = script.replace("if((function(){try{return !!window.addEventListener;}catch(e){return false;}})()){document.addEventListener('DOMContentLoaded',l,false);}else{document.attachEvent('onreadystatechange',l);}", "l();");
+    script = script.replace("var h=document.createElement('div');h.innerHTML='<a href=\\\'/\\\'>x</a>';h=h.firstChild.href;var r=h.match(/https?:\\/\\//)[0];h=h.substr(r.length).toLowerCase();","var h =\"https://www.seebug.org\";")
     r = re.compile(r'document.cookie.*?\)\;')
     script = re.sub(r, 'document.write(dc)',script)
-    ctxt.eval(script)
+    try:
+    	ctxt.eval(script)
+    except:
+    	print "seebug反爬虫策略可能已更新，请调整爬虫解析策略"
+    	exit()
     name, value = result.split('=')
     post_cookie[name] = value
     return post_cookie
-
 
 def cookie_init():
     req = requests.get("https://www.seebug.org/vuldb/vulnerabilities")

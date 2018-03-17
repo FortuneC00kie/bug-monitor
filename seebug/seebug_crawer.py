@@ -37,7 +37,6 @@ def get_bug_content(ahref, s):
             print '403 error'
             time.sleep(20)
             r2=s.get(url=aburl+a,verify=False)
-        print 'content code---------------'
         tree2 = etree.HTML(r2.content)
 
         name = tree2.xpath("//span[@class='pull-titile']/text()")[0].strip()
@@ -71,6 +70,7 @@ def get_bug_content(ahref, s):
         if not bug_info_search(name):
             addtime = time.strftime('%Y-%m-%d', time.localtime(time.time()))
             bug_info_save(name, rate, app, None, cve, refer, addtime)
+
 
 def get_bug_link(content):
     tree=etree.HTML(content)

@@ -8,27 +8,18 @@ from threading import Timer
 
 
 def struts_monitor():
-	"""
-	struts 漏洞监控定时任务
-	"""
 	time = 60 *5
 	struts_check()
 	t = Timer(time, struts_monitor)
 	t.start()
 
 def seebug_monitor():
-	"""
-	seebug 最新漏洞爬虫定时任务
-	"""
 	time = 60 * 60 * 6
 	seebug_crawer()
 	t = Timer(time, seebug_monitor)
 	t.start()
 
 def cve_monitor():
-	"""
-	cve 最新漏洞爬虫定时任务
-	"""
 	time = 60 * 60 * 6
 	cve_crawer()
 	t = Timer(time, cve_monitor)
