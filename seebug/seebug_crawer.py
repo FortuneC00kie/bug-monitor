@@ -1,29 +1,20 @@
 #coding:utf-8
 import requests
-from seebug_cookie_init import cookie_init
+from seebug.seebug_cookie_init import cookie_init
 from lxml import etree
 import time, sys
-import sys
-import time
 
-sys.path.append("..")
 from lib.mongodb import *
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
+headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/65.0.3325.181 Safari/537.36'}
 
 url = 'https://www.seebug.org/vuldb/vulnerabilities'
 aburl  = 'https://www.seebug.org'
 
-headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-             'Accept-Encoding': 'gzip, deflate',
-             'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
-             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0'}
-
 def seebug_crawer():
     cookie = cookie_init()
     s = requests.session()
+    s.headers.update(headers)
     requests.utils.add_dict_to_cookiejar(s.cookies, cookie)
     content = s.get(url).content
     ahref = get_bug_link(content)
@@ -34,12 +25,12 @@ def get_bug_content(ahref, s):
         r2 = s.get(url=aburl+a, verify=False)
         time.sleep(5)
         if r2.status_code==403:
-            print '403 error'
             time.sleep(20)
             r2=s.get(url=aburl+a,verify=False)
         tree2 = etree.HTML(r2.content)
 
         name = tree2.xpath("//span[@class='pull-titile']/text()")[0].strip()
+        print(name)
         # try:
         #     href = tree2.xpath("//div[@id='j-md-source']/a/text()")[0].strip()
         #     print href

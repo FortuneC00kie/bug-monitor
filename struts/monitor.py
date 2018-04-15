@@ -4,7 +4,7 @@
 import sys
 sys.path.append("..")
 
-from init import struts_latest, struts_info
+from struts.init import struts_latest, struts_info
 from lib.wechat import *
 from lib.mongodb import *
 

@@ -2,5 +2,5 @@
 # -*- coding: utf-8 -*-
 # @Author  : mr.chery (mr.chery666@gmail.com)
 
-from monitor import *
-from init import *
+from struts.init import *
+from struts.monitor import *

@@ -2,16 +2,15 @@
 # -*- coding: utf-8 -*-
 # @Author  : mr.chery (mr.chery666@gmail.com)
 from werobot import WeRoBot
-import yaml
+import configparser
 
-with open('config.yaml', 'r') as f:
-	a = f.read()
-	conf = yaml.load(a)
+config = configparser.ConfigParser()
+config.read("config.ini", encoding="utf-8")
 
 robot = WeRoBot()
 
-robot.config["APP_ID"] = conf['wechat']['app_id']
-robot.config["APP_SECRET"] = conf['wechat']['app_secret']
+robot.config["APP_ID"] = config.get("wechat", "app_id")
+robot.config["APP_SECRET"] = config.get("wechat", "app_secret")
 
 client = robot.client
 

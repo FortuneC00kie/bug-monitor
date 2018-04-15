@@ -8,25 +8,28 @@ from threading import Timer
 
 
 def struts_monitor():
-	time = 60 *5
-	struts_check()
-	t = Timer(time, struts_monitor)
-	t.start()
+    time = 60 * 5
+    struts_check()
+    t = Timer(time, struts_monitor)
+    t.start()
+
 
 def seebug_monitor():
-	time = 60 * 60 * 6
-	seebug_crawer()
-	t = Timer(time, seebug_monitor)
-	t.start()
+    time = 60 * 60 * 6
+    seebug_crawer()
+    t = Timer(time, seebug_monitor)
+    t.start()
+
 
 def cve_monitor():
-	time = 60 * 60 * 6
-	cve_crawer()
-	t = Timer(time, cve_monitor)
-	t.start()
+    time = 60 * 60 * 6
+    cve_crawer()
+    t = Timer(time, cve_monitor)
+    t.start()
+
 
 if __name__ == '__main__':
-	struts_init()
-	struts_monitor()
-	seebug_monitor()
-	cve_monitor()
+    struts_init()
+    struts_monitor()
+    seebug_monitor()
+    cve_monitor()
