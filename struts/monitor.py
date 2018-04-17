@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author  : mr.chery (mr.chery666@gmail.com)
-import sys
-sys.path.append("..")
-
 from struts.init import struts_latest, struts_info
 from lib.wechat import *
 from lib.mongodb import *

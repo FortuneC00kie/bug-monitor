@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author  : mr.chery (mr.chery666@gmail.com)
+
 from struts import *
 from seebug import *
 from cve import *
@@ -16,14 +17,14 @@ def struts_monitor():
 
 def seebug_monitor():
     time = 60 * 60 * 6
-    seebug_crawer()
+    seebug_crawler()
     t = Timer(time, seebug_monitor)
     t.start()
 
 
 def cve_monitor():
     time = 60 * 60 * 6
-    cve_crawer()
+    cve_crawler()
     t = Timer(time, cve_monitor)
     t.start()
 

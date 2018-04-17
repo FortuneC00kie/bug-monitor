@@ -1,36 +1,43 @@
-#coding:utf-8
-import requests
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Author  : mr.chery (mr.chery666@gmail.com)
+
 from seebug.seebug_cookie_init import cookie_init
 from lxml import etree
 import time, sys
-
 from lib.mongodb import *
-
-headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/65.0.3325.181 Safari/537.36'}
+from lib.log import *
 
 url = 'https://www.seebug.org/vuldb/vulnerabilities'
 aburl  = 'https://www.seebug.org'
 
-def seebug_crawer():
-    cookie = cookie_init()
-    s = requests.session()
-    s.headers.update(headers)
-    requests.utils.add_dict_to_cookiejar(s.cookies, cookie)
-    content = s.get(url).content
+def seebug_crawler():
+    s = cookie_init()
+    try:
+        request = s.get(url, verify=False, timeout=5)
+    except Exception as e:
+        exception(e)
+    if request.status_code == 521:
+        info("seebug cookie init failed")
+        s = cookie_init()
+    content = request.content
     ahref = get_bug_link(content)
     get_bug_content(ahref, s)
+    info("seebug crawl success")
 
 def get_bug_content(ahref, s):
     for a in ahref:
-        r2 = s.get(url=aburl+a, verify=False)
+        r2 = s.get(url = aburl+a, verify=False, timeout=5)
         time.sleep(5)
-        if r2.status_code==403:
+        if r2.status_code == 403:
             time.sleep(20)
-            r2=s.get(url=aburl+a,verify=False)
+            r2 = s.get(url = aburl+a,verify=False, timeout=5)
+        if r2.status_code == 521:
+            s = cookie_init()
+            r2 = s.get(url = aburl+a,verify=False, timeout=5)
         tree2 = etree.HTML(r2.content)
 
         name = tree2.xpath("//span[@class='pull-titile']/text()")[0].strip()
-        print(name)
         # try:
         #     href = tree2.xpath("//div[@id='j-md-source']/a/text()")[0].strip()
         #     print href
@@ -64,6 +71,6 @@ def get_bug_content(ahref, s):
 
 
 def get_bug_link(content):
-    tree=etree.HTML(content)
-    ahref=tree.xpath("//table[@class='table sebug-table table-vul-list']//tr//td[@class='vul-title-wrapper']/a[@class='vul-title']/@href")
+    tree = etree.HTML(content)
+    ahref = tree.xpath("//table[@class='table sebug-table table-vul-list']//tr//td[@class='vul-title-wrapper']/a[@class='vul-title']/@href")
     return ahref
